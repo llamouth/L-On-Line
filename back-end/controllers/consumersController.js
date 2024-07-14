@@ -1,9 +1,11 @@
 const express = require("express")
 const consumer = express.Router()
-const { getAllConsumers, getOneConsumer, createConsumer, updateConsumer } = require("../queries/consumers")
+const { getAllConsumers, getOneConsumer, createConsumer, updateConsumer, deleteConsumer } = require("../queries/consumers")
+const { checkUser, checkId } = require("../validations/userValidations")
 
 consumer.get("/", async (req, res) => {
     const allConsumers = await getAllConsumers()
+    
     if(allConsumers){
         res.status(200).json(allConsumers)
     }else {
@@ -11,30 +13,27 @@ consumer.get("/", async (req, res) => {
     }
 })
 
-consumer.get("/:id", async (req, res) => {
+consumer.get("/:id", checkId, async (req, res) => {
     const { id } = req.params 
     const singleConsumer = await getOneConsumer(id)
-    if(singleConsumer){
-        res.status(200).json(singleConsumer)
-    }else {
-        res.status(500).json({ error: "Internal Server Error"})
-    }
+    res.status(200).json(singleConsumer);
 })
 
-consumer.post("/", async (req, res) => {
-    const newConsumer = await createConsumer(req.body)
-    res.status(200).json(newConsumer)
+consumer.post("/", checkUser, async (req, res) => {
+    const newConsumer = await createConsumer(req.body);
+    res.status(200).json(newConsumer);
 })
 
-consumer.post("/:id", async (req, res) => {
-    const { id } = req.params
-    const updatedConsumer = await updateConsumer(id, req.body)
+consumer.post("/:id", checkId, checkUser, async (req, res) => {
+    const { id } = req.params;
+    const updatedConsumer = await updateConsumer(id, req.body);
+    res.status(200).json(updatedConsumer);
+})
 
-    if(updateConsumer.id){
-        res.status(200).json(updatedConsumer)
-    }else {
-        res.status(500).json({ error: "Internal Server Error"})
-    }
+consumer.delete("/:id", checkId, async (req, res) => {
+    const { id } = req.params;
+    const deletedConsumer = await deleteConsumer(id);
+    res.status(200).json(deletedConsumer); 
 })
 
 module.exports = consumer;

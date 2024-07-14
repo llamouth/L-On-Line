@@ -2,7 +2,7 @@ const db = require("../db/dbConfig")
 
 const getAllDistributors = async () => {
     try {
-        const allDistributors =  await db.any("SELECT * FROM distributor")
+        const allDistributors =  await db.any("SELECT * FROM distributor JOIN products on distributor.distid = products.distributor_id")
         return allDistributors
     } catch (error) {
         return error
@@ -11,7 +11,7 @@ const getAllDistributors = async () => {
 
 const getOneDistributor = async (id) => {
     try {
-        const singleDistributor = await db.one("SELECT * FROM distributor WHERE id=$1;", id)
+        const singleDistributor = await db.any("SELECT distributor.userName, products.productName, products.productPrice FROM distributor JOIN products ON distributor.distid = products.distributor_id WHERE distid=$1;", id)
         return singleDistributor
     } catch (error) {
         return error
@@ -40,9 +40,8 @@ const updateDistributor = async (id, dist) => {
 
 const deleteDistributor = async (id) => {
     try {
-        const deletedDistributor = await db.one("DELETE FROM distributor WHERE id=$1 RETURNING *;", id)
-        const { username } = deletedDistributor
-        const deletedProducts = db.any("DELETE FROM products WHERE distributor=$1 RETURNING *", username)
+        const deletedProducts = await db.any("DELETE FROM products WHERE distributor_id=$1 RETURNING productName, productPrice, description;", id)
+        const deletedDistributor = await db.one("DELETE FROM distributor WHERE distid=$1 RETURNING distid, userName;", id)
         return { deletedDistributor, deletedProducts }
     } catch (error) {
         return error
