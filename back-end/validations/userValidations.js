@@ -1,6 +1,8 @@
+const db = require("../db/dbConfig")
+
 const checkUser = (req, res, next) => {
     const { userName, password } = req.body
-    if(userName){
+    if( userName ){
         if(typeof userName !== "string"){
             res.status(500).json({ error: "Invalid Username"})
         }
@@ -22,10 +24,21 @@ const checkId = (req, res, next) => {
     if(typeof +id !== "number"){
         res.status(404).json({ error: "Not anumber"}) 
     }
-    if(id.includes(".")){
+    if(String(id).includes(".")){
         res.status(404).json({ error: "Not a Whole number"})
     }
     return next()
 }
 
-module.exports = { checkUser, checkId }
+const checkKeysValidity = ( req, res, next ) => {
+    const presentKeys = Object.keys(req.body)
+    const bool = presentKeys.some( (key) => {
+       return key !== "username" || key !== "password"
+    })
+    if(bool){
+        res.status(500).json({ error: "Invalid Key in submission"})
+    }
+    return next()
+}
+
+module.exports = { checkUser, checkId, checkKeysValidity }

@@ -2,7 +2,7 @@ const db = require("../db/dbConfig")
 
 const getAllDistributors = async () => {
     try {
-        const allDistributors =  await db.any("SELECT * FROM distributor JOIN products on distributor.distid = products.distributor_id")
+        const allDistributors =  await db.any("SELECT * FROM distributor")
         return allDistributors
     } catch (error) {
         return error

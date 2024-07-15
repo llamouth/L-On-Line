@@ -1,12 +1,13 @@
 const db = require("../db/dbConfig")
+const { getOneDistributor } = require("../queries/distributors")
 
-//const selectedDistributor = await db.one("SELECT * FROM distributor WHERE distributor=$1", distributor)
 
-const checkProduct = (req, res, next) => {
-    const { distributor, productName, productPrice} = req.body
-    if(distributor){
-        if(productName){
-            if(productPrice){
+const checkProduct = async (req, res, next) => {
+    const { distributor_id, productname, productprice} = req.body
+    const selectedDistributor = await getOneDistributor(distributor_id)
+    if(selectedDistributor){
+        if(productname){
+            if(productprice){
                 return next()
             }else {
                 res.status(500).json({ error: "Invalid price"})

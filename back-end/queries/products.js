@@ -1,8 +1,8 @@
 const db = require("../db/dbConfig")
 
-const getAllProducts = () => {
+const getAllProducts = async () => {
     try {
-        const allProducts = db.any("SELECT * FROM products")
+        const allProducts = await db.any("SELECT * FROM products")
         return allProducts
     } catch (error) {
         return error
@@ -11,17 +11,18 @@ const getAllProducts = () => {
 
 const getOneProduct = async (id) => {
     try {
-        const singleProduct = db.one("SELECT * FROM products WHERE id=$1;", id)
+        const singleProduct = await db.one("SELECT * FROM products WHERE id=$1;", id)
         return singleProduct
     } catch (error) {
+        console.log("error")
         return error
     }
 }
 
 const createProduct = async (product) => {
-    const { distributor, productName, productPrice } = product
+    const { distributor_id, productname, productprice } = product
     try {
-        const newProduct = db.one("INSERT INTO products (distributor, productName, productPrice) VALUES ($1, $2, $3) RETURNING *;", [distributor, productName, productPrice])
+        const newProduct = await db.one("INSERT INTO products (distributor_id, productName, productPrice) VALUES ($1, $2, $3) RETURNING *;", [distributor_id, productname, productprice])
         return newProduct
     } catch (error) {
         return error
@@ -29,9 +30,9 @@ const createProduct = async (product) => {
 }
 
 const updateProduct = async (id, product) => {
-    const { distributor, productName, productPrice } = product;
+    const { distributor_id, productname, productprice } = product;
     try {
-        const updatedProduct = await db.one("UPDATE products SET distributor=$1, productName=$2, productPrice=$3 WHERE id=$4 RETURNING *;", [distributor, productName, productPrice, id])
+        const updatedProduct = await db.one("UPDATE products SET distributor_id=$1, productName=$2, productPrice=$3 WHERE id=$4 RETURNING *;", [distributor_id, productname, productprice, id])
         return updatedProduct
     } catch (error) {
         return error

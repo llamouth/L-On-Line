@@ -17,7 +17,12 @@ products.get("/", async (req, res) => {
 products.get("/:id", checkId, async (req, res) => {
     const { id } = req.params
     const singleProduct = await getOneProduct(id)
-    res.status(200).json(singleProduct)
+    
+    if(singleProduct.id){
+        res.status(200).json(singleProduct)
+    }else {
+        res.status(500).json({ error: "Invalid ID"})
+    }
 })
 
 products.post("/", checkId, checkProduct , async (req, res) => {
@@ -28,13 +33,23 @@ products.post("/", checkId, checkProduct , async (req, res) => {
 products.post("/:id", checkId, checkProduct, async (req, res) => {
     const { id }= req.params
     const updatedProduct = await updateProduct(id, req.body)
-    res.status(200).json(updatedProduct)
+
+    if(updatedProduct.id){
+        res.status(200).json(updatedProduct)
+    }else {
+        res.status(500).json({error: "Invalid ID"})
+    }
 })
 
 products.delete("/:id", checkId, async (req, res) => {
     const { id } = req.params
     const deletedProduct = await deleteProduct(id)
-    res.status(200).json(deletedProduct)
+
+    if(deletedProduct.id){
+        res.status(200).json(deletedProduct)
+    }else {
+        res.status(500).json({error: "Invalid ID"})
+    }
 })
 
 module.exports = products
