@@ -40,7 +40,7 @@ const updateDistributor = async (id, dist) => {
 
 const deleteDistributor = async (id) => {
     try {
-        const deletedProducts = await db.any("DELETE FROM products WHERE distributor_id=$1 RETURNING productName, productPrice, description;", id)
+        const deletedProducts = await db.any("DELETE FROM products WHERE distributor_id=$1 RETURNING product_name, product_price, description;", id)
         const deletedDistributor = await db.one("DELETE FROM distributors WHERE distid=$1 RETURNING distid, userName;", id) 
         return { deletedDistributor, deletedProducts }
     } catch (error) {

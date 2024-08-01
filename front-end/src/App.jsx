@@ -1,33 +1,32 @@
-import { useEffect, useState } from 'react'
+import React, { useState } from "react";
 import {Routes, Route} from "react-router-dom"
-import { Cloudinary } from '@cloudinary/url-gen';
-import { auto } from '@cloudinary/url-gen/actions/resize';
-import { autoGravity } from '@cloudinary/url-gen/qualifiers/gravity';
-import { AdvancedImage } from '@cloudinary/react';
 import './App.scss';
-import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Navbar from './Components/Navbar'
-import ProductList from './Pages/ProductList';
+//COMPONENTS 
+import Navbar from './Components/Navbar/Navbar'
+import useToken from "./Components/Login/UseToken";
+
+//PAGES
+import ProductList from './Pages/ProductList/ProductList';
+import Home from './Pages/Home/Home';
+import Login from "./Pages/Login/Login";
+import UserPage from "./Pages/User/UserPage";
 
 function App() {
 
-  const API = import.meta.env.VITE_BASE_URL
-  const [ products, setProducts ] = useState([])
+  const { token, setToken } = useToken();
 
-  useEffect(() => {
-    fetch(`${API}/products`)
-    .then( res => res.json() )
-    .then( res => setProducts(res))
-    .catch( err => console.error(err) )
-  },[])
-  
   return (
     <div className='container'>
-      <Navbar/>
-      <Routes>
-        <Route path='/' element={<ProductList products={products} setProducts={setProducts}/>}/>
-      </Routes>
+      <Navbar token={token}/>
+      <div className="main-display">
+        <Routes>
+          <Route path='/' element={ <Home/> }/>
+          <Route path='/products' element={ <ProductList /> }/>
+          <Route path='/login' element={ <Login setToken={setToken} token={token} /> }/>
+          <Route path='user/:id' element={ <UserPage/> }/>
+        </Routes>
+      </div>
     </div>
   )
 }

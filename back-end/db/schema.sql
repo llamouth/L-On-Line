@@ -4,13 +4,15 @@ CREATE DATABASE lonline;
 
 CREATE TABLE distributors (
     distid SERIAL PRIMARY KEY,
-    userName TEXT NOT NULL,
+    username TEXT NOT NULL,
     password VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE consumers (
     consid SERIAL PRIMARY KEY,
-    userName TEXT NOT NULL,
+    first_name VARCHAR(25) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    username TEXT NOT NULL,
     password VARCHAR(20) NOT NULL,
     address TEXT NOT NULL
 );
@@ -19,8 +21,8 @@ CREATE TABLE products (
     id SERIAL PRIMARY KEY,
     distributor_id INT NOT NULL REFERENCES distributors (distid),
     consumers_id INT REFERENCES consumers (consid),
-    productName TEXT NOT NULL,
-    productPrice DECIMAL(10, 2) NOT NULL,
+    product_name TEXT NOT NULL,
+    product_price DECIMAL(10, 2) NOT NULL,
     description VARCHAR(250),
     image_url TEXT
 );
@@ -29,11 +31,12 @@ CREATE TABLE cart_products (
     cart_product_id SERIAL PRIMARY KEY,
     carts_owner INT REFERENCES consumers (consid) ON DELETE CASCADE,
     products_id INT REFERENCES products (id) ON DELETE CASCADE,
-    products_quantity INT 
+    products_quantity INT,
+    ordered BOOLEAN DEFAULT false  
 );
 
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY, 
-    distributors_id INT REFERENCES distributors (distid),
-    consumers_id INT REFERENCES consumers (consid)
+    distributors_id INT REFERENCES distributors (distid), 
+    cart_products_id INT REFERENCES cart_products (cart_product_id)
 );

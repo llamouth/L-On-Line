@@ -1,0 +1,15 @@
+.home {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+
+
+    &__button {
+        background-color: #0cc2ad; 
+        color: white; 
+        border: none;
+        width: 150px;
+    }
+}

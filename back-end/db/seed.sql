@@ -5,7 +5,7 @@ INSERT INTO distributors (userName, password) VALUES
 ('janedoe', 'password123'),
 ('normanthomas', 'password123');
 
-INSERT INTO products (distributor_id, productName, productPrice) VALUES 
+INSERT INTO products (distributor_id, product_name, product_price) VALUES 
 (2, 'headphones', 149.99),
 (2, 'apple macbook', 1099.99),
 (2, 'speaker', 59.99),
@@ -15,15 +15,19 @@ INSERT INTO products (distributor_id, productName, productPrice) VALUES
 (3, '3d-printer', 499.99),
 (3, '3d-pen', 44.99);
 
-INSERT INTO consumers (userName, password, address) VALUES 
-('larrylamouth', 'password123', '123 abc st'),
-('al-sean', 'password123', '456 xyz st');
+INSERT INTO consumers (first_name, last_name, username, password, address) VALUES 
+( 'john', 'doe', 'johndoe', 'password123', '123 abc st'),
+( 'howie', 'duitt', 'howieduitt', 'password123', '456 def ave'),
+( 'albee', 'beck', 'albeebeck', 'password123', '789 ghi dr'),
+( 'lebron', 'james', 'lebronjames', 'password123', '123 abc st'),
+( 'aubrey', 'graham', 'ovodrake', 'password123', '123 abc st'),
+( 'rick', 'james', 'rickjames', 'password123', '456 xyz st');
 
-INSERT INTO cart_products (carts_owner, products_id, products_quantity) VALUES 
-(1, 1, 1), 
-(1, 2, 2), 
-(1, 3, 1), 
-(1, 5, 1), 
-(2, 3, 2), 
-(2, 6, 1),
-(2, 2, 1);
+INSERT INTO cart_products (carts_owner, products_id, products_quantity, ordered) VALUES 
+(1, 1, 1, true), 
+(4, 2, 2, false), 
+(5, 3, 1, true), 
+(1, 5, 1, false), 
+(2, 3, 2, true), 
+(2, 6, 1, true),
+(5, 2, 1, false);

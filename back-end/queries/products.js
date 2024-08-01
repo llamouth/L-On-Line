@@ -20,9 +20,9 @@ const getOneProduct = async (id) => {
 }
 
 const createProduct = async (product) => {
-    const { distributor_id, productname, productprice, description, photo } = product
+    const { distributor_id, product_name, product_price, description, photo } = product
     try {
-        const newProduct = await db.one("INSERT INTO products (distributor_id, productName, productPrice, description, photo) VALUES ($1, $2, $3, $4, $5) RETURNING *;", [distributor_id, productname, productprice, description, photo])
+        const newProduct = await db.one("INSERT INTO products (distributor_id, product_name, product_price, description, photo) VALUES ($1, $2, $3, $4, $5) RETURNING *;", [distributor_id, product_name, product_price, description, photo])
         return newProduct
     } catch (error) {
         return error
@@ -30,9 +30,9 @@ const createProduct = async (product) => {
 }
 
 const updateProduct = async (id, product) => {
-    const { distributor_id, productname, productprice, description, photo } = product;
+    const { distributor_id, product_name, product_price, description, photo } = product;
     try {
-        const updatedProduct = await db.one("UPDATE products SET distributor_id=$1, productName=$2, productPrice=$3, description=$4, photo=$5 WHERE id=$6 RETURNING *;", [distributor_id, productname, productprice, description, photo, id])
+        const updatedProduct = await db.one("UPDATE products SET distributor_id=$1, product_name=$2, product_price=$3, description=$4, photo=$5 WHERE id=$6 RETURNING *;", [distributor_id, product_name, product_price, description, photo, id])
         return updatedProduct
     } catch (error) {
         return error

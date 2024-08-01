@@ -2,7 +2,7 @@ const db = require("../db/dbConfig")
 
 const getAllCarts = async () => {
     try {
-        const allCartProducts = await db.any("SELECT cart_products.cart_product_id, consumers.consid AS cart_owner, cart_products.products_id, cart_products.products_quantity FROM cart_products JOIN consumers ON cart_products.carts_owner = consumers.consid ")
+        const allCartProducts = await db.any("SELECT cart_products.cart_product_id, consumers.consid AS cart_owner, cart_products.products_id, cart_products.products_quantity, cart_products.ordered FROM cart_products JOIN consumers ON cart_products.carts_owner = consumers.consid ")
         return allCartProducts
     } catch (error) {
         return error
@@ -11,7 +11,7 @@ const getAllCarts = async () => {
 
 const getSingleCart = async (cart_owner_id) => {
     try {
-        const singleUserCart = await db.any("SELECT cart_products.cart_product_id, consumers.consid AS cart_owner, cart_products.products_id, cart_products.products_quantity FROM cart_products JOIN consumers ON cart_products.carts_owner = consumers.consid WHERE carts_owner=$1", cart_owner_id)
+        const singleUserCart = await db.any("SELECT cart_products.cart_product_id, consumers.consid AS cart_owner, cart_products.products_id, cart_products.products_quantity, cart_products.ordered FROM cart_products JOIN consumers ON cart_products.carts_owner = consumers.consid WHERE carts_owner=$1", cart_owner_id)
         return singleUserCart
     } catch (error) {
         return error
@@ -19,9 +19,9 @@ const getSingleCart = async (cart_owner_id) => {
 }
 
 const updateSingleCart = async (id, cart) => {
-    const { products_quantity } = cart
+    const { products_quantity, ordered } = cart
     try {
-        const updatedSingleCart = await db.one("UPDATE cart_products SET products_quantity=$1 WHERE cart_product_id=$2 RETURNING *", [products_quantity, id])
+        const updatedSingleCart = await db.one("UPDATE cart_products SET products_quantity=$1, ordered=$2 WHERE cart_product_id=$3 RETURNING *", [products_quantity, ordered, id])
         return updatedSingleCart
     } catch (error) {
         return error
@@ -29,9 +29,10 @@ const updateSingleCart = async (id, cart) => {
 }
 
 const createSingleCart = async (cart) => {
-    const {carts_owner, products_id, products_quantity} = cart
+    const {carts_owner, products_id, products_quantity, ordered} = cart
     try {
-        const createdCart = await db.one("INSERT INTO cart_products (carts_owner, products_id, products_quantity) VALUES($1, $2, $3)", [carts_owner, products_id, products_quantity])
+        const createdCart = await db.one("INSERT INTO cart_products (carts_owner, products_id, products_quantity, ordered) VALUES($1, $2, $3, $4)", [carts_owner, products_id, products_quantity, ordered])
+        return createdCart
     } catch (error) {
         return error
     }
@@ -39,7 +40,7 @@ const createSingleCart = async (cart) => {
 
 const deleteSingleCart = async (id) => {
     try {
-        const deletedCart = await db.one("DELETE FROM cart_products WHERE cart_product_id=$1 RETURNING *")
+        const deletedCart = await db.one("DELETE FROM cart_products WHERE cart_product_id=$1 RETURNING *", id)
         return deletedCart
     } catch (error) {
         return error
