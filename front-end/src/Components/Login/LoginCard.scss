@@ -1,4 +1,79 @@
+
+$primary-color: #C0E8F9; 
+$secondary-color: #6c757d; 
+$background-color: #f8f9fa; 
+$text-color: #212529; 
+$secondary-background: #02243D;
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
 .login-card {
     display: flex;
-} 
-  
+    height: 100vh; 
+    width: 100vw; 
+    overflow: hidden; 
+
+    .form-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $background-color;
+        padding: 20px;
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            width: 100%;
+
+            input {
+                margin-bottom: 10px;
+                padding: 10px;
+                border: 1px solid $secondary-color;
+                border-radius: 4px;
+                font-size: 16px;
+                color: $text-color;
+
+                &:focus {
+                    border-color: $primary-color;
+                    outline: none;
+                }
+            }
+
+            button {
+                background-color: $primary-color;
+                color: $text-color;
+                border: none;
+                border-radius: 4px;
+                padding: 10px;
+                font-size: 16px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: darken($primary-color, 10%);
+                }
+            }
+        }
+    }
+
+    .image-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: $secondary-background;
+        padding: 20px;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+    }
+}

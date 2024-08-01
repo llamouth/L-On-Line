@@ -1,3 +1,8 @@
+$primary-color: #C0E8F9; 
+$secondary-color: #02243D; 
+$text-color: #212529;
+$border-color: #dee2e6;
+
 .home {
     display: flex;
     flex-direction: column;
@@ -7,9 +12,14 @@
 
 
     &__button {
-        background-color: #0cc2ad; 
-        color: white; 
+        background-color: $primary-color; 
+        color: $secondary-color; 
         border: none;
         width: 150px;
+
+        &:hover {
+            background-color: $secondary-color;
+            color: $primary-color;
+        }
     }
 }

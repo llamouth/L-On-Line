@@ -1,0 +1,50 @@
+$user-page-background: #f8f9fa;
+$button-background: #007366;
+$button-text-color: #fff;
+$button-hover-background: #005544;
+$button-hover-text-color: #fff;
+$button-border-color: #007366;
+$primary-color: #C0E8F9; 
+$secondary-color: #02243D; 
+$background-color: #C0E8F9; 
+$text-color: #212529;
+$border-color: #dee2e6;
+
+.user-page {
+    background-color: $user-page-background;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    
+    .buttons-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+
+        &__button {
+            background-color: $primary-color; 
+            color: $secondary-color; 
+            border: none;
+            width: 150px;
+    
+            &:hover {
+                background-color: $secondary-color;
+                color: $primary-color;
+            }
+        }
+        
+    }
+
+}
+
+.link-in-link {
+    color: $text-color;
+    text-decoration: none;
+
+    &:hover {
+        color: $primary-color;
+    }
+}

@@ -11,7 +11,7 @@ const getAllConsumers = async () => {
 
 const getOneConsumer = async (id) => {
     try {
-        const singleConsumer = await db.one("SELECT * FROM consumers WHERE id=$1", id)
+        const singleConsumer = await db.one("SELECT * FROM consumers WHERE consid=$1", id)
         return singleConsumer
     } catch (error) {
         return error

@@ -1,30 +1,31 @@
-// @import '~bootstrap/scss/bootstrap';
-
 html, body {
-    height: 100vh;
-    width: 100vw;
-}
-
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#root {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.main-display {
+    margin: 0;
+    padding: 0;
     height: 100%;
     width: 100%;
 }
 
-.container {
+body {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+#root {
     height: 100%;
-    width: 100%; 
+    width: 100%;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
+.main-display {
+    flex: 1; // Takes up remaining space
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LoginCard from '../../Components/Login/LoginCard';
 import { useNavigate } from 'react-router-dom';
+import './Login.scss';
 
 const Login = ({ setToken, token }) => {
     const [consumerId, setConsumerId] = useState();
@@ -10,10 +11,13 @@ const Login = ({ setToken, token }) => {
         if (token && consumerId) {
             navigate(`/user/${consumerId}`);
         }
-    }, [consumerId]);
-        
-    return <LoginCard setToken={setToken} setConsumerId={setConsumerId} />;
-    
+    }, [consumerId, token, navigate]);
+
+    return (
+        <div className='login'>
+            <LoginCard setToken={setToken} setConsumerId={setConsumerId} />
+        </div>
+    );
 };
 
 export default Login;
