@@ -23,7 +23,11 @@ cartProducts.put("/:id", async (req, res) => {
 cartProducts.post("/", async (req, res) => {
     const newCart = req.body
     const createdCart = await createSingleCart(newCart)
-    res.status(200).json(createdCart)
+    if(createdCart.carts_owner){
+        res.status(200).json(createdCart)
+    }else {
+        res.status(500).json({ error: "Internal Server Error"})
+    }
 })
 
 cartProducts.delete("/:id", async (req, res) => {

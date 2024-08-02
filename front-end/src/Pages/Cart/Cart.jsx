@@ -1,10 +1,83 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import "./Cart.scss"
+import ProductCard from '../../Components/ProductCard/ProductCard';
+import Button from 'react-bootstrap/Button';
 
 const Cart = () => {
+    const API = import.meta.env.VITE_BASE_URL;
+    const { id } = useParams();
+    const [currentUser, setCurrentUser] = useState({});
+    const [userCart, setUserCart] = useState([]);
+    const [userProducts, setUserProducts] = useState([]);
+    const [totalCartAmount, setTotalCartAmount] = useState(0);
+
+    useEffect(() => {
+        fetch(`${API}/consumers/${id}`)
+            .then(res => res.json())
+            .then(res => setCurrentUser(res))
+            .catch(err => console.error(err));
+    }, [id]);
+
+    useEffect(() => {
     
+        fetch(`${API}/carts/${id}`)
+            .then(res => res.json())
+            .then(res => setUserCart(res))
+            .catch(err => console.error(err));
+    }, [id]);
+
+    useEffect(() => {
+    
+        const productIds = [...new Set(userCart.map(item => item.products_id))];
+    
+        Promise.all(
+            productIds.map(productId =>
+                fetch(`${API}/products/${productId}`)
+                    .then(res => res.json())
+            )
+        )
+        .then(products => {
+            const productsWithQuantities = products.map(product => {
+                const cartItem = userCart.find(item => item.products_id === product.id);
+                return { ...product, quantity: cartItem ? cartItem.products_quantity : 0 };
+            });
+            setUserProducts(productsWithQuantities);
+        })
+        .catch(err => console.error(err));
+    }, [userCart, API]);
+
+    useEffect(() => {
+
+        const totalAmount = userProducts.reduce((total, product) => {
+            return total += parseFloat(product.product_price) * (product.quantity || 1);
+        }, 0);
+
+        setTotalCartAmount(totalAmount.toFixed(2));
+    }, [userProducts]);
+
+    const handleSubmitOrder = () => {
+    
+        alert("Order submitted!");
+    };
+
     return (
-        <div>
-            
+        <div className="cart-container">
+            <h3>{`${currentUser.first_name} ${currentUser.last_name}`}'s Cart</h3>
+            <div className="product-grid">
+                {userProducts.map((product) => (
+                     <div className="product-card-wrapper" key={product.id}>
+                        <ProductCard product={product} />
+                        <p className="product-quantity">{product.quantity}</p>
+                    </div>
+                ))}
+            </div>
+            <div className="total-submit-container">
+                <div className="total-amount">
+                    Total Amount: ${totalCartAmount}
+                </div>
+                <Button onClick={handleSubmitOrder} className="submit-order-button">Submit Order</Button>
+            </div>
         </div>
     );
 };

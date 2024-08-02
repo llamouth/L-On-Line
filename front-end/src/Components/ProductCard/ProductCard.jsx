@@ -1,13 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
-import './ProductCard.scss'; // Import the SCSS file for custom styles
+import Button from 'react-bootstrap/esm/Button';
 
-const ProductCard = ({ product }) => {
-    const { product_name, product_price, description, consumers_id, distributor_id } = product;
+import placeholderImage from "../../../Images/placeholderImage.jpeg"
+import './ProductCard.scss'; 
+
+import AddToCart from '../AddToCart/AddToCart';
+import RemoveFromCart from '../RemoveFromCart/RemoveFromCart';
+
+
+const ProductCard = ({ product, userId }) => {
+    const { product_name, product_price, description, consumers_id, distributor_id, product_image } = product;
+    const [showPopUp, setShowPopUp] = useState(false)
+
+    const handleClick = () => {
+        setShowPopUp(!showPopUp)
+    }
 
     return (
         <Card className="product-card">
-            <Card.Img variant="top" src="holder.js/100px160" />
+            <Card.Img variant="top" src={product_image || placeholderImage} />
             <Card.Body>
                 <Card.Title>{product_name}</Card.Title>
                 <Card.Text>
@@ -18,8 +30,29 @@ const ProductCard = ({ product }) => {
                 </Card.Text>
             </Card.Body>
             <Card.Footer>
-                <small className="text-muted">Last updated 3 mins ago</small>
+                {!product.quantity ?
+                        <Button 
+                            style={{
+                                background: "#02243D",
+                                border: "none"
+                            }} 
+                            onClick={handleClick}>
+                                Add to Cart
+                        </Button>
+                    :
+                        <Button 
+                            style={{
+                                background: "#02243D",
+                                border: "none"
+                            }}
+                            onClick={handleClick}> 
+                                Remove from Cart
+                        </Button>
+
+                }
             </Card.Footer>
+            {(showPopUp && !product.quantity) && <AddToCart product={product} userId={userId} setShowPopUp={setShowPopUp}/> }
+            {(showPopUp && product.quantity) && <RemoveFromCart setShowPopUp={setShowPopUp} product={product} userId={userId}/>}
         </Card>
     );
 };

@@ -27,7 +27,7 @@ const LoginCard = ({ setToken, setConsumerId }) => {
         );
 
         if (foundUser) {
-            const token = { token: current.username }; 
+            const token = { token: current.username, consid: foundUser.consid }; 
             setConsumerId(foundUser.consid);
             setToken(token);
         } else {
