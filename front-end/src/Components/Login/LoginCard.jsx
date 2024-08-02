@@ -40,7 +40,7 @@ const LoginCard = ({ setToken, setConsumerId }) => {
             .then(res => res.json())
             .then(res => setConsumers(res))
             .catch(err => console.error(err));
-    }, []);
+    }, [API]);
 
     return (
         <div className='login-card'>

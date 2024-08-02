@@ -2,14 +2,19 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import { Link, useParams } from 'react-router-dom';
 import './UserPage.scss';
+import FourZeroFour from '../../Components/FourZeroFour/FourZeroFour';
 
-const UserPage = ({setUserId}) => {
-    
+const UserPage = ({setUserId, token}) => {
+
     const { id } = useParams();
 
     useEffect(() => {
         setUserId(id)
     }, [])
+
+    if(!token){
+        return <FourZeroFour/>
+    }
 
     return (
         <div className='user-page'>

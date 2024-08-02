@@ -5,7 +5,7 @@ export default function useToken() {
         const tokenString = sessionStorage.getItem('token');
         try {
             const userToken = JSON.parse(tokenString);
-            return userToken?.token || null;
+            return userToken || null;
         } catch {
             return null;
         }
@@ -14,8 +14,8 @@ export default function useToken() {
     const [token, setToken] = useState(getToken());
 
     const saveToken = (userToken) => {
-        sessionStorage.setItem('token', JSON.stringify(userToken.token));
-        setToken({username: userToken.token, consid: userToken.consid});
+        sessionStorage.setItem('token', JSON.stringify(userToken));
+        setToken(userToken);
     };
 
     const removeToken = () => {

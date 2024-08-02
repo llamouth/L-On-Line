@@ -3,14 +3,19 @@ import { useParams } from 'react-router-dom';
 import "./Cart.scss"
 import ProductCard from '../../Components/ProductCard/ProductCard';
 import Button from 'react-bootstrap/Button';
+import FourZeroFour from '../../Components/FourZeroFour/FourZeroFour';
 
-const Cart = () => {
+const Cart = ({token}) => {
     const API = import.meta.env.VITE_BASE_URL;
     const { id } = useParams();
     const [currentUser, setCurrentUser] = useState({});
     const [userCart, setUserCart] = useState([]);
     const [userProducts, setUserProducts] = useState([]);
     const [totalCartAmount, setTotalCartAmount] = useState(0);
+
+    if(id === "null" || !token){
+        return <FourZeroFour/>
+    }
 
     useEffect(() => {
         fetch(`${API}/consumers/${id}`)
@@ -40,7 +45,7 @@ const Cart = () => {
         .then(products => {
             const productsWithQuantities = products.map(product => {
                 const cartItem = userCart.find(item => item.products_id === product.id);
-                return { ...product, quantity: cartItem ? cartItem.products_quantity : 0 };
+                return { ...product, quantity: cartItem ? cartItem.products_quantity : 0, cart_product_id: cartItem.cart_product_id };
             });
             setUserProducts(productsWithQuantities);
         })
@@ -67,7 +72,7 @@ const Cart = () => {
             <div className="product-grid">
                 {userProducts.map((product) => (
                      <div className="product-card-wrapper" key={product.id}>
-                        <ProductCard product={product} />
+                        <ProductCard product={product} userCart={userCart}/>
                         <p className="product-quantity">{product.quantity}</p>
                     </div>
                 ))}

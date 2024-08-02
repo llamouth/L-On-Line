@@ -9,7 +9,7 @@ import AddToCart from '../AddToCart/AddToCart';
 import RemoveFromCart from '../RemoveFromCart/RemoveFromCart';
 
 
-const ProductCard = ({ product, userId }) => {
+const ProductCard = ({ product, userId, userCart }) => {
     const { product_name, product_price, description, consumers_id, distributor_id, product_image } = product;
     const [showPopUp, setShowPopUp] = useState(false)
 
@@ -46,7 +46,7 @@ const ProductCard = ({ product, userId }) => {
                                 border: "none"
                             }}
                             onClick={handleClick}> 
-                                Remove from Cart
+                                Update Cart
                         </Button>
 
                 }

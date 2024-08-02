@@ -5,6 +5,7 @@ import './App.scss';
 // COMPONENTS 
 import Navbar from './Components/Navbar/Navbar';
 import useToken from "./Components/Login/UseToken";
+import FourZeroFour from "./Components/FourZeroFour/FourZeroFour";
 
 // PAGES
 import ProductList from './Pages/ProductList/ProductList';
@@ -26,8 +27,9 @@ function App() {
           <Route path='/' element={<Home />} />
           <Route path='/products' element={<ProductList userId={userId}/>} />
           <Route path='/login' element={<Login setToken={setToken} token={token} />} />
-          <Route path='user/:id' element={<UserPage  setUserId={setUserId}/>} />
-          <Route path='user/:id/cart' element={<Cart/>}/>
+          <Route path='user/:id' element={<UserPage  setUserId={setUserId} token={token}/>} />
+          <Route path='user/:id/cart' element={<Cart token={token}/>}/>
+          <Route path="*" element={<FourZeroFour />} />
         </Routes>
       </main>
     </div>
