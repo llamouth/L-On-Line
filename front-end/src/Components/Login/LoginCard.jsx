@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './LoginCard.scss';
+import image1 from "../../../Images/Lonline.png"
 
 const LoginCard = ({ setToken, setUserId, dist}) => {
     
@@ -52,7 +53,7 @@ const LoginCard = ({ setToken, setUserId, dist}) => {
                 </form>
             </div>
             <div className='image-container'>
-                <img src='../../../Images/Lonline.png' alt="Login" />
+                <img src={image1} alt="Login" />
             </div>
         </div>
     );
