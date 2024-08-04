@@ -19,6 +19,7 @@ const RemoveFromCart = ({ setShowPopUp, userId, product }) => {
         })
         .then(res => res.json())
         .then(res => {
+            console.log(res)
             setShowPopUp(false);
         })
         .catch(err => console.error(err));

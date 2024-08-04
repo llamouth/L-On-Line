@@ -8,6 +8,14 @@ const Products = ({userId}) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
+        fetch(`${API}/products`)
+            .then(res => res.json())
+            .then(res => setProducts(res))
+            .catch(err => console.error(err));
+    }, []);
+
+
+    useEffect(() => {
         const updateProductsWithPhotos = async () => {
             try {
                 const photos = await fetchPhotos(products);
@@ -30,14 +38,6 @@ const Products = ({userId}) => {
             updateProductsWithPhotos();
         }
     }, [products]);
-
-
-    useEffect(() => {
-        fetch(`${API}/products`)
-            .then(res => res.json())
-            .then(res => setProducts(res))
-            .catch(err => console.error(err));
-    }, [API]);
 
     return (
         <div className="products-container">

@@ -3,42 +3,42 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 import './LoginCard.scss';
 
-const LoginCard = ({ setToken, setConsumerId }) => {
+const LoginCard = ({ setToken, setUserId, dist}) => {
+    
     const API = import.meta.env.VITE_BASE_URL;
 
-    const [consumers, setConsumers] = useState([]);
+    const [users, setUsers] = useState([]);
     const [current, setCurrent] = useState({
         username: "",
         password: ""
     });
 
     const handleChange = (e) => {
-        setCurrent((prevState) => ({
-            ...prevState,
-            [e.target.name]: e.target.value
-        }));
+        setCurrent((prevState) => {
+           return  {...prevState,[e.target.name]: e.target.value}
+        });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        const foundUser = consumers.find(user =>
-            user.username === current.username && user.password === current.password
-        );
+        const foundUser = users.find(user => user.username === current.username && user.password === current.password);
 
-        if (foundUser) {
-            const token = { token: current.username, consid: foundUser.consid }; 
-            setConsumerId(foundUser.consid);
-            setToken(token);
-        } else {
+        if (foundUser && dist) {
+            setUserId(foundUser.distid)
+        } else if(foundUser){
+            setUserId(foundUser.consid);
+        }else {
             console.error("User not found or password incorrect");
+            return;
         }
+        setToken(foundUser);
     };
 
     useEffect(() => {
-        fetch(`${API}/consumers`)
+        fetch(`${API}/${dist ? "distributors" : "consumers"}`)
             .then(res => res.json())
-            .then(res => setConsumers(res))
+            .then(res => setUsers(res))
             .catch(err => console.error(err));
     }, [API]);
 
@@ -60,7 +60,7 @@ const LoginCard = ({ setToken, setConsumerId }) => {
 
 LoginCard.propTypes = {
   setToken: PropTypes.func.isRequired,
-  setConsumerId: PropTypes.func.isRequired
+  setUserId: PropTypes.func.isRequired
 }
 
 export default LoginCard;

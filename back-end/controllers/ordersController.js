@@ -2,9 +2,11 @@ const express = require("express");
 const orders = express.Router();
 const { getAllOrders, getSingleOrder, createSingleOrder, updateSingleOrder, deleteSingleOrder } = require("../queries/orders");
 
-orders.get("/", async (req, res) => {
+orders.get("/:id", async (req, res) => {
+    const { id } = req.params
+
     try {
-        const allOrders = await getAllOrders();
+        const allOrders = await getAllOrders(id);
         res.status(200).json(allOrders);
     } catch (error) {
         res.status(500).json({ error: "Internal Server Error" });

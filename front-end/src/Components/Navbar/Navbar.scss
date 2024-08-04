@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+// Navbar.scss
 
 $primary-color: #C0E8F9; 
 $secondary-color: #02243D; 
@@ -8,93 +8,71 @@ $border-color: #dee2e6;
 .navbar {
     background-color: $primary-color;
     border-bottom: 1px solid $border-color;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+    .container-fluid {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
     .navbar-brand {
-        color: $text-color;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 700; 
-        
-        &:hover {
-            color: darken($primary-color, 10%);
+        .link {
+            color: $secondary-color;
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-decoration: none;
+
+            &:hover {
+                color: darken($secondary-color, 10%);
+            }
         }
     }
 
-    .navbar-toggler {
-        border-color: $primary-color;
-    }
+    .navbar-nav {
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        
+        .nav-link {
+            color: $secondary-color;
+            font-size: 1rem;
+            margin-left: 1rem;
 
-    .navbar-toggler-icon {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath stroke='currentColor' stroke-width='2' d='M5 7h20M5 15h20M5 23h20'/%3E%3C/svg%3E");
-    }
-
-    .offcanvas {
-        background-color: $primary-color;
-        border-left: 1px solid $border-color;
-
-        .offcanvas-header {
-            border-bottom: 1px solid $border-color;
-            .offcanvas-title {
-                color: $primary-color;
+            &:hover {
+                color: darken($secondary-color, 10%);
             }
         }
 
-        .nav-link {
-            color: $text-color;
+        .logout-button {
+            background-color: $secondary-color;
+            color: $primary-color;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin-left: 1rem;
+            font-size: 1rem;
 
             &:hover {
-                background-color: $secondary-color;
+                background-color: darken($secondary-color, 10%);
                 color: $primary-color;
             }
         }
 
         .btn {
-            background-color: $primary-color;
-            color: $secondary-color;
+            background-color: $secondary-color;
+            color: $primary-color;
             border: none;
+            margin-left: 1rem;
 
             &:hover {
-                background-color: $secondary-color;
+                background-color: darken($secondary-color, 10%);
                 color: $primary-color;
             }
         }
-
-        .form-control {
-            border-color: $border-color;
-            border-radius: 4px;
-
-            &:focus {
-                border-color: $primary-color;
-                box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
-            }
-        }
-
-        .btn-outline-success {
-            border-color: $primary-color;
-            color: $primary-color;
-            background-color: $secondary-color;
-
-            &:hover {
-                background-color: $primary-color;
-                color: $secondary-color;
-            }
-        }
     }
-}
 
-.link {
-    color: $text-color;
-    text-decoration: none;
-
-    &:hover {
-        color: darken($primary-color, 10%);
-    }
-}
-
-.link-in-link {
-    color: $text-color;
-    text-decoration: none;
-
-    &:hover {
-        color: $primary-color;
+    .navbar-toggler {
+        margin-left: auto;
     }
 }

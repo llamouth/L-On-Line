@@ -11,10 +11,8 @@ const Login = ({ setToken, token }) => {
         navigate(`/user/${consumerId}`);
         }
     }, [token, consumerId, navigate]);
-
     
-    return <LoginCard setToken={setToken} setConsumerId={setConsumerId} />;
-    
+    return <LoginCard setToken={setToken} setUserId={setConsumerId} />; 
 };
 
 export default Login;

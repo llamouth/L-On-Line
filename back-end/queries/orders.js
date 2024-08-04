@@ -1,17 +1,40 @@
 const db = require("../db/dbConfig");
 
-const getAllOrders = async () => {
+const getAllOrders = async (id) => {
     try {
-        const allOrders = await db.any(`
-            SELECT orders.order_id, distributors.distid AS distributors_id, consumers.consid AS consumers_id,  orders.cart_products_id,
+        const allOrdersData = await db.any(`
+            SELECT orders.order_id, distributors.distid AS distributors_id, consumers.consid AS consumers_id, 
                    products.id AS product_id, products.product_name, products.product_price, 
                    cart_products.products_quantity
             FROM orders 
             JOIN cart_products ON orders.cart_products_id = cart_products.cart_product_id 
             JOIN consumers ON cart_products.carts_owner = consumers.consid 
             JOIN products ON cart_products.products_id = products.id 
-            JOIN distributors ON orders.distributors_id = distributors.distid 
-        `);
+            JOIN distributors ON orders.distributors_id = distributors.distid WHERE distributors_id=$1`, id);
+
+        const allOrders = allOrdersData.reduce((acc, order) => {
+            const existingOrder = acc.find(o => o.order_id === order.order_id);
+            const product = {
+                product_id: order.product_id,
+                product_name: order.product_name,
+                product_price: order.product_price,
+                products_quantity: order.products_quantity
+            };
+
+            if (existingOrder) {
+                existingOrder.products.push(product);
+            } else {
+                acc.push({
+                    order_id: order.order_id,
+                    distributors_id: order.distributors_id,
+                    consumers_id: order.consumers_id,
+                    products: [product]
+                });
+            }
+
+            return acc;
+        }, []);
+
         return allOrders;
     } catch (error) {
         return error;
@@ -20,7 +43,7 @@ const getAllOrders = async () => {
 
 const getSingleOrder = async (id) => {
     try {
-        const singleOrder = await db.any(`
+        const singleOrderData = await db.any(`
             SELECT orders.order_id, distributors.distid AS distributors_id, consumers.consid AS consumers_id, 
                    products.id AS product_id, products.product_name, products.product_price, 
                    cart_products.products_quantity, orders.cart_products_id
@@ -29,20 +52,25 @@ const getSingleOrder = async (id) => {
             JOIN consumers ON cart_products.carts_owner = consumers.consid 
             JOIN products ON cart_products.products_id = products.id 
             JOIN distributors ON orders.distributors_id = distributors.distid 
-            WHERE consumers.consid = $1
+            WHERE orders.order_id = $1
         `, [id]);
-        
+
+        if (singleOrderData.length === 0) {
+            return null; 
+        }
+
         const orderDetails = {
-            order_id: singleOrder[0]?.order_id,
-            distributors_id: singleOrder[0]?.distributors_id,
-            consumers_id: singleOrder[0]?.consumers_id,
-            cart_products: singleOrder.map(order => ({
+            order_id: singleOrderData[0].order_id,
+            distributors_id: singleOrderData[0].distributors_id,
+            consumers_id: singleOrderData[0].consumers_id,
+            products: singleOrderData.map(order => ({
                 product_id: order.product_id,
                 product_name: order.product_name,
                 product_price: order.product_price,
                 products_quantity: order.products_quantity
             }))
         };
+
         return orderDetails;
     } catch (error) {
         return error;

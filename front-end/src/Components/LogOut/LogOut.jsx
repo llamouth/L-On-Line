@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import useToken from '../../Components/Login/UseToken';
-import Button from 'react-bootstrap/esm/Button';
+import Button from 'react-bootstrap/Button';
 
 const Logout = () => {
     const { removeToken } = useToken();
@@ -13,7 +13,9 @@ const Logout = () => {
     };
 
     return (
-        <Button onClick={handleLogout} className='logout-button'>Logout</Button>
+        <Button onClick={handleLogout} className='logout-button'>
+            Logout
+        </Button>
     );
 };
 

@@ -38,5 +38,5 @@ CREATE TABLE cart_products (
 CREATE TABLE orders (
     order_id SERIAL PRIMARY KEY, 
     distributors_id INT REFERENCES distributors (distid), 
-    cart_products_id INT REFERENCES cart_products (cart_product_id)
+    cart_products_id INT REFERENCES cart_products (cart_product_id) ON DELETE CASCADE
 );

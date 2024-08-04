@@ -61,9 +61,35 @@ const Cart = ({token}) => {
         setTotalCartAmount(totalAmount.toFixed(2));
     }, [userProducts]);
 
-    const handleSubmitOrder = () => {
-    
-        alert("Order submitted!");
+    const handleSubmitOrder = async () => {
+        try {
+            await Promise.all(
+                userCart.map(async (item) => {
+                    await fetch(`${API}/carts/${item.cart_product_id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ ...item, ordered: true })
+                    });
+                })
+            );
+
+            await fetch(`${API}/carts/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            setUserCart([]);
+            setUserProducts([]);
+            setTotalCartAmount(0);
+
+            alert("Order submitted!");
+        } catch (error) {
+            console.error("Error submitting order:", error);
+        }
     };
 
     return (

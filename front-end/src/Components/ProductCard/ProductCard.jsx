@@ -11,7 +11,9 @@ import RemoveFromCart from '../RemoveFromCart/RemoveFromCart';
 
 const ProductCard = ({ product, userId, userCart }) => {
     const { product_name, product_price, description, consumers_id, distributor_id, product_image } = product;
-    const [showPopUp, setShowPopUp] = useState(false)
+    const [showPopUp, setShowPopUp] = useState(false);
+
+    console.log(product)
 
     const handleClick = () => {
         setShowPopUp(!showPopUp)
@@ -51,8 +53,8 @@ const ProductCard = ({ product, userId, userCart }) => {
 
                 }
             </Card.Footer>
-            {(showPopUp && !product.quantity) && <AddToCart product={product} userId={userId} setShowPopUp={setShowPopUp}/> }
-            {(showPopUp && product.quantity) && <RemoveFromCart setShowPopUp={setShowPopUp} product={product} userId={userId}/>}
+            {(showPopUp && !product.quantity) && <AddToCart product={product} userId={userId} setShowPopUp={setShowPopUp}/> } {/*CONSUMER*/}
+            {(showPopUp && product.quantity) && <RemoveFromCart setShowPopUp={setShowPopUp} product={product} userId={userId}/>} {/*DISTRIBUTOR*/}
         </Card>
     );
 };
