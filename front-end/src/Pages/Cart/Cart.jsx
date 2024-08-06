@@ -11,9 +11,11 @@ const Cart = ({token}) => {
     const [currentUser, setCurrentUser] = useState({});
     const [userCart, setUserCart] = useState([]);
     const [userProducts, setUserProducts] = useState([]);
+    const [userQuantity, setUserQuantity] = useState()
     const [totalCartAmount, setTotalCartAmount] = useState(0);
 
     if(id === "null" || !token){
+        console.log(id, token)
         return <FourZeroFour/>
     }
 
@@ -45,7 +47,7 @@ const Cart = ({token}) => {
         .then(products => {
             const productsWithQuantities = products.map(product => {
                 const cartItem = userCart.find(item => item.products_id === product.id);
-                return { ...product, quantity: cartItem ? cartItem.products_quantity : 0, cart_product_id: cartItem.cart_product_id };
+                return { ...product, quantity: cartItem.products_quantity, cart_product_id: cartItem.cart_product_id };
             });
             setUserProducts(productsWithQuantities);
         })

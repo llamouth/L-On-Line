@@ -1,9 +1,9 @@
 const db = require("../db/dbConfig")
 
 const checkUser = (req, res, next) => {
-    const { userName, password } = req.body
-    if( userName ){
-        if(typeof userName !== "string"){
+    const { username, password } = req.body
+    if( username ){
+        if(typeof username !== "string"){
             res.status(500).json({ error: "Invalid Username"})
         }
     }else {

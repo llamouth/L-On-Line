@@ -19,11 +19,12 @@ const getOneConsumer = async (id) => {
 }
 
 const createConsumer = async (consumer) => {
-    const { userName, password, address } = consumer
+    const { username, password, address, first_name, last_name } = consumer
     try {
-        const newConsumer = await db.one("INSERT INTO consumers (userName, password, address) VALUES ($1, $2, $3) RETURNING *", [userName, password, address])
+        const newConsumer = await db.one("INSERT INTO consumers (username, password, address, first_name, last_name) VALUES ($1, $2, $3, $4, $5) RETURNING *", [username, password, address, first_name, last_name])
         return newConsumer
     } catch (error) {
+        console.log(error)
         return error
     }
 }

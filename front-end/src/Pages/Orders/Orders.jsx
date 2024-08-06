@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import "./Orders.scss"
-import OrdersCard from './OrdersCard';
+import OrdersCard from '../../Components/Orders/OrdersCard';
 
 const Orders = ({token}) => {
 
     const API = import.meta.env.VITE_BASE_URL;
-    const [distributorsOrders, setDistributorsOrders] = useState({}) 
+    const [distributorsOrders, setDistributorsOrders] = useState([]) 
 
     useEffect(() => {
         fetch(`${API}/orders/${token.distid}`)
@@ -16,14 +16,13 @@ const Orders = ({token}) => {
 
     return (
         <div className="orders-container">
-        <h2>Orders</h2>
-        <ul>
-            {Array.isArray(distributorsOrders) &&
-                distributorsOrders.map((order) => {
+            <h2>Orders</h2>
+            <ul>
+                {distributorsOrders.map((order) => {
                     return <OrdersCard order={order} key={order.order_id} distributorsOrders={distributorsOrders} setDistributorsOrders={setDistributorsOrders}/>
-            })}
-        </ul>
-      </div>
+                })}
+            </ul>
+        </div>
     );
 };
 

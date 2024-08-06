@@ -22,6 +22,7 @@ consumer.get("/:id", checkId, async (req, res) => {
 
 consumer.post("/", checkUser, checkAddress, async (req, res) => {
     const newConsumer = await createConsumer(req.body);
+    console.log(newConsumer)
     res.status(200).json(newConsumer);
 })
 

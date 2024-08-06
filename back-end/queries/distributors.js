@@ -20,7 +20,7 @@ const getOneDistributor = async (id) => {
 
 const createDistributor = async (dist) => {
     try {
-        const newDist = await db.one("INSERT INTO distributors (userName, password) VALUES ($1, $2) RETURNING *;", [dist.userName, dist.password])
+        const newDist = await db.one("INSERT INTO distributors (userName, password) VALUES ($1, $2) RETURNING *;", [dist.username, dist.password])
         return newDist
     } catch (error) {
         console.log(error)
@@ -29,9 +29,9 @@ const createDistributor = async (dist) => {
 }
 
 const updateDistributor = async (id, dist) => {
-    const { userName, password } = dist
+    const { username, password } = dist
     try {
-        const updatedDistributor = await db.one("UPDATE distributors SET userName=$1, password=$2 WHERE id=$3 RETURNING *", [userName, password, id])
+        const updatedDistributor = await db.one("UPDATE distributors SET username=$1, password=$2 WHERE id=$3 RETURNING *", [username, password, id])
         return updatedDistributor
     } catch (error) {
         return error

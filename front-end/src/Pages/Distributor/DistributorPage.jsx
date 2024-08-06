@@ -1,12 +1,12 @@
 import React from 'react';
-
-import Orders from '../../Components/Orders/Orders';
+import "./DistributorPage.scss"
+import Orders from '../Orders/Orders';
 
 const DistributorPage = ({ distributorId, token }) => {
 
 
   return (
-    <div>
+    <div className='distributor-page'>
       <h1>Welcome, Here are your current orders:</h1>
       <Orders token={token}/>
     </div>
