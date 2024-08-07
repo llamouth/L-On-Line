@@ -51,7 +51,7 @@ const AddToCart = ({ userId, product, setShowPopUp, showPopUp }) => {
                             border: "none"
                         }} 
                         onClick={handleSubmit}>
-                            Submit    
+                        Submit    
                     </Button>
                     <Button 
                         style={{

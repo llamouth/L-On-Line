@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 const EditOrder = ({product, consumerCart}) => {
 
     const API = import.meta.env.VITE_BASE_URL;
-    const [ editConsumer, setEditConsumerO] = useState({})
+    const [ editConsumer, setEditConsumer] = useState({})
     const [currentProduct, setCurrentProduct] = useState({})
     const [productQuantity, setProductQuantity] = useState(0)
 
@@ -32,7 +32,7 @@ const EditOrder = ({product, consumerCart}) => {
     }, [currentProduct])
 
     useEffect(() => {
-        setEditConsumerO({
+        setEditConsumer({
         first_name: currentConsumer.first_name,
         last_name: currentConsumer.last_name,
         username: currentConsumer.username,

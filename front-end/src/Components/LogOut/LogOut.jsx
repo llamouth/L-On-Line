@@ -4,12 +4,16 @@ import useToken from '../../Components/Login/UseToken';
 import Button from 'react-bootstrap/Button';
 
 const Logout = () => {
-    const { removeToken } = useToken();
+    const { token, removeToken } = useToken();
     const navigate = useNavigate();
 
     const handleLogout = () => {
         removeToken();
-        navigate('/login');
+        if(token.distid){
+            navigate('/distributor-login')
+        }else{
+            navigate('/login');
+        }
     };
 
     return (

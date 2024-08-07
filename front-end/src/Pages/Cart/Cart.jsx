@@ -66,13 +66,18 @@ const Cart = ({token}) => {
         try {
             await Promise.all(
                 userCart.map(async (item) => {
+                    console.log(item)
                     await fetch(`${API}/carts/${item.cart_product_id}`, {
                         method: 'PUT',
                         body: JSON.stringify({ ...item, ordered: true }),
                         headers: {
                             'Content-Type': 'application/json'
                         }
-                    });
+                    })
+                    .then(res => res.json())
+                    .then(res => {
+                        console.log(res)
+                    })
                 })
             );
 

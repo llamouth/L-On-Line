@@ -16,7 +16,7 @@ const Products = ({ userId }) => {
 
     useEffect(() => {
         const updateProductsWithPhotos = async () => {
-            if(products.every(product => !product.image_url)){
+            if(products.some(product => !product.image_url)){
                 try {
                     const photos = await fetchPhotos(products);
 

@@ -41,7 +41,7 @@ const createSingleCart = async (cart) => {
 
 const deleteSingleCart = async (id) => {
     try {
-        const deletedCart = await db.one("DELETE FROM cart_products WHERE cart_product_id=$1 RETURNING *", id)
+        const deletedCart = await db.any("DELETE FROM cart_products WHERE carts_owner=$1 RETURNING *", id)
         return deletedCart
     } catch (error) {
         return error
