@@ -3,11 +3,11 @@ const { getOneDistributor } = require("../queries/distributors")
 
 
 const checkProduct = async (req, res, next) => {
-    const { distributor_id, productname, productprice} = req.body
+    const { distributor_id, product_name, product_price} = req.body
     const selectedDistributor = await getOneDistributor(distributor_id)
     if(selectedDistributor){
-        if(productname){
-            if(productprice){
+        if(product_name){
+            if(product_price){
                 return next()
             }else {
                 res.status(500).json({ error: "Invalid price"})

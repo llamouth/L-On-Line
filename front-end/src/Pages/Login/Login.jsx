@@ -8,7 +8,7 @@ const Login = ({ setToken, token }) => {
 
     useEffect(() => {
         if (token && consumerId) {
-        navigate(`/user/${consumerId}`);
+            navigate(`/user/${consumerId}`);
         }
     }, [token, consumerId, navigate]);
     

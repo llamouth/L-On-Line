@@ -11,7 +11,7 @@ const getAllDistributors = async () => {
 
 const getOneDistributor = async (id) => {
     try {
-        const singleDistributor = await db.any("SELECT distributors.userName, products.productName, products.productPrice FROM distributors JOIN products ON distributors.distid = products.distributor_id WHERE distid=$1;", id)
+        const singleDistributor = await db.any("SELECT distributors.username, products.product_name, products.product_price FROM distributors JOIN products ON distributors.distid = products.distributor_id WHERE distid=$1;", id)
         return singleDistributor
     } catch (error) {
         return error

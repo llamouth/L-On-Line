@@ -1,6 +1,6 @@
 import React from 'react';
 import Products from '../../Components/Products/Products';
-import './ProductList.scss'; // Import the SCSS file for custom styles
+import './ProductList.scss';
 
 const ProductList = ({userId}) => {
     return (

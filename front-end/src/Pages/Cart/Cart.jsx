@@ -15,7 +15,6 @@ const Cart = ({token}) => {
     const [totalCartAmount, setTotalCartAmount] = useState(0);
 
     if(id === "null" || !token){
-        console.log(id, token)
         return <FourZeroFour/>
     }
 
@@ -69,10 +68,10 @@ const Cart = ({token}) => {
                 userCart.map(async (item) => {
                     await fetch(`${API}/carts/${item.cart_product_id}`, {
                         method: 'PUT',
+                        body: JSON.stringify({ ...item, ordered: true }),
                         headers: {
                             'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({ ...item, ordered: true })
+                        }
                     });
                 })
             );
@@ -100,7 +99,7 @@ const Cart = ({token}) => {
             <div className="product-grid">
                 {userProducts.map((product) => (
                      <div className="product-card-wrapper" key={product.id}>
-                        <ProductCard product={product} userCart={userCart}/>
+                        <ProductCard product={product} userCart={userCart} setUserCart={setUserCart}/>
                         <p className="product-quantity">{product.quantity}</p>
                     </div>
                 ))}

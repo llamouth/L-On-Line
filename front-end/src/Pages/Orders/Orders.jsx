@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import "./Orders.scss"
 import OrdersCard from '../../Components/Orders/OrdersCard';
+import Button from 'react-bootstrap/esm/Button';
+import { Link } from 'react-router-dom';
 
 const Orders = ({token}) => {
 
@@ -22,6 +24,9 @@ const Orders = ({token}) => {
                     return <OrdersCard order={order} key={order.order_id} distributorsOrders={distributorsOrders} setDistributorsOrders={setDistributorsOrders}/>
                 })}
             </ul>
+            <div className="add-product-container">
+                <Button as={Link} to='/create/product' className='add-product-button'>Add A Product</Button>
+            </div>
         </div>
     );
 };

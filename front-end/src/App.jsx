@@ -16,6 +16,7 @@ import UserPage from "./Pages/User/UserPage";
 import DistributorPage from "./Pages/Distributor/DistributorPage";
 import Cart from "./Pages/Cart/Cart";
 import CreateUser from "./Pages/Create/CreateUser";
+import CreateProdcut from "./Pages/Create/CreateProdcut";
 
 function App() {
   const { token, setToken, removeToken } = useToken();
@@ -34,15 +35,16 @@ function App() {
       <main className="main-display">
         <Routes>
           <Route path='/' element={ <Home token={token}/> } />
-          <Route path='/products' element={<ProductList userId={userId}/>} />
-          <Route path='/login' element={<Login setToken={setToken} token={token} />} />
+          <Route path='/products' element={ <ProductList userId={userId}/> } />
+          <Route path='/create/product' element={ <CreateProdcut token={token}/> }/>
+          <Route path='/login' element={ <Login setToken={setToken} token={token} /> } />
           <Route path='/create/user'element={ <CreateUser/> }/>
-          <Route path='/user/:id' element={<UserPage setUserId={setUserId} token={token}/>} />
-          <Route path='/user/:id/cart' element={<Cart token={token}/>}/>
-          <Route path='/distributor-login' element={<DistributorLogin setToken={setToken} token={token} />} />
-          <Route path='/distributor/:id' element={<DistributorPage distributorId={userId} token={token} />} />
+          <Route path='/user/:id' element={ <UserPage setUserId={setUserId} token={token}/> } />
+          <Route path='/user/:id/cart' element={ <Cart token={token}/> } />
+          <Route path='/distributor-login' element={ <DistributorLogin setToken={setToken} token={token}/> } />
+          <Route path='/distributor/:id' element={ <DistributorPage distributorId={userId} token={token}/> } />
           <Route path='/distributor/:id/order/:orderid'/>
-          <Route path="*" element={<FourZeroFour />} />
+          <Route path="*" element={ <FourZeroFour/> } />
         </Routes>
       </main>
     </div>

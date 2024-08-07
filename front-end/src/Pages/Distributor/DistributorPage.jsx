@@ -2,8 +2,7 @@ import React from 'react';
 import "./DistributorPage.scss"
 import Orders from '../Orders/Orders';
 
-const DistributorPage = ({ distributorId, token }) => {
-
+const DistributorPage = ({ token }) => {
 
   return (
     <div className='distributor-page'>

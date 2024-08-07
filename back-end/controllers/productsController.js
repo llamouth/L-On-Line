@@ -52,4 +52,16 @@ products.delete("/:id", checkId, async (req, res) => {
     }
 })
 
+products.patch("/:id", async (req, res) => {
+    const { id } = req.params;
+    const updatedProduct = await updateProduct(id, req.body);
+
+    if (updatedProduct.id) {
+        res.status(200).json(updatedProduct);
+    } else {
+        res.status(500).json({ error: "Invalid ID" });
+    }
+});
+
+
 module.exports = products

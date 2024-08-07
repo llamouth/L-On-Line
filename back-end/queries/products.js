@@ -20,24 +20,30 @@ const getOneProduct = async (id) => {
 }
 
 const createProduct = async (product) => {
-    const { distributor_id, product_name, product_price, description, photo } = product
+    const { distributor_id, product_name, product_price, description, image_url } = product
     try {
-        const newProduct = await db.one("INSERT INTO products (distributor_id, product_name, product_price, description, photo) VALUES ($1, $2, $3, $4, $5) RETURNING *;", [distributor_id, product_name, product_price, description, photo])
+        const newProduct = await db.one("INSERT INTO products (distributor_id, product_name, product_price, description, image_url) VALUES ($1, $2, $3, $4, $5) RETURNING *;", [distributor_id, product_name, product_price, description, image_url])
         return newProduct
     } catch (error) {
+        console.error(error)
         return error
     }
 }
 
 const updateProduct = async (id, product) => {
-    const { distributor_id, product_name, product_price, description, photo } = product;
+    const setString = Object.keys(product).map((key, index) => `${key}=$${index + 1}`).join(", ");
+    const values = Object.values(product);
+    
     try {
-        const updatedProduct = await db.one("UPDATE products SET distributor_id=$1, product_name=$2, product_price=$3, description=$4, photo=$5 WHERE id=$6 RETURNING *;", [distributor_id, product_name, product_price, description, photo, id])
-        return updatedProduct
+        const updatedProduct = await db.one(
+            `UPDATE products SET ${setString} WHERE id=$${values.length + 1} RETURNING *;`, 
+            [...values, id]
+        );
+        return updatedProduct;
     } catch (error) {
-        return error
+        return error;
     }
-} 
+};
 
 const deleteProduct = async (id) => {
     try {

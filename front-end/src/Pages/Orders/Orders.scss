@@ -90,4 +90,30 @@ $font-family: 'Poppins', sans-serif;
             }
         }
     }
+    .add-product-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        padding: 10px 20px;
+        border-radius: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        gap: 20px;
+
+        .add-product-button{
+            background-color: #02243D;
+            border: none;
+            background-color: $primary-color;
+            color: #02243D;
+            transition: background-color 2s ease-in-out;
+
+            &:hover {
+                background-color: #02243D;
+                color: $primary-color;
+            }
+        }
+    }
 }
+

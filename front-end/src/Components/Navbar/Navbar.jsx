@@ -29,7 +29,7 @@ function NavDisplay({ token, userId, logout }) {
             <Navbar.Toggle aria-controls="navbar-nav" />
             <Navbar.Collapse id="navbar-nav">
                 <Nav className="navbar-nav">
-                    <Nav.Link as={Link} to="/">Home</Nav.Link>
+                    <Nav.Link as={Link} to={token?.distid ? `/distributor/${token.distid}` : token?.consid ? `/user/${token.consid}` : "/"}>Home</Nav.Link>
                     <Nav.Link as={Link} to="/products">Products</Nav.Link>
                     {!token && (
                         <NavDropdown title="Login" id="basic-nav-dropdown" className="nav-dropdown" show={showDropdown} onToggle={handleToggle} onSelect={handleSelect}>

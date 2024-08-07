@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from 'react-router-dom';
 
-const RemoveFromCart = ({ setShowPopUp, userId, product }) => {
+const RemoveFromCart = ({ setShowPopUp, userId, product, setUserCart}) => {
     const API = import.meta.env.VITE_BASE_URL;
-    const navigate = useNavigate();
 
     const [currentProduct, setCurrentProduct] = useState({
         carts_owner: userId,
@@ -19,10 +17,15 @@ const RemoveFromCart = ({ setShowPopUp, userId, product }) => {
         })
         .then(res => res.json())
         .then(res => {
-            console.log(res)
+            setUserCart((prevState) => {
+                prevState.splice(prevState.indexOf(res), 1)
+                return prevState
+            })
             setShowPopUp(false);
         })
         .catch(err => console.error(err));
+
+        
     };
 
     const handleSubmit = () => {

@@ -3,7 +3,7 @@ import ProductCard from '../ProductCard/ProductCard';
 import './Products.scss'; 
 import { fetchPhotos } from '../../utils/fetchPhotos';
 
-const Products = ({userId}) => {
+const Products = ({ userId }) => {
     const API = import.meta.env.VITE_BASE_URL;
     const [products, setProducts] = useState([]);
 
@@ -14,23 +14,36 @@ const Products = ({userId}) => {
             .catch(err => console.error(err));
     }, []);
 
-
     useEffect(() => {
         const updateProductsWithPhotos = async () => {
-            try {
-                const photos = await fetchPhotos(products);
+            if(products.every(product => !product.image_url)){
+                try {
+                    const photos = await fetchPhotos(products);
 
-                const updatedProducts = products.map((product, index) => {
-                    const photo = photos[index];
-                    return {
-                        ...product,
-                        product_image: photo ? photo.urls.small : null,
-                    };
-                });
+                    const updatedProducts = await Promise.all(products.map(async (product, index) => {
+                        const photo = photos[index];
+                        const image_url = photo ? photo.urls.small : null;
 
-                setProducts(updatedProducts);
-            } catch (error) {
-                console.error('Error fetching multiple items:', error);
+                        if (image_url) {
+                            await fetch(`${API}/products/${product.id}`, {
+                                method: 'PATCH',
+                                body: JSON.stringify({ image_url }),
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                }
+                            });
+                        }
+
+                        return {
+                            ...product,
+                            image_url,
+                        };
+                    }));
+
+                    setProducts(updatedProducts);
+                } catch (error) {
+                    console.error('Error fetching multiple items:', error);
+                }
             }
         };
 

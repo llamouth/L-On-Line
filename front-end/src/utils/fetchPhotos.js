@@ -27,6 +27,7 @@ async function fetchPhotos(products) {
   
     // Use Promise.all to fetch photos for all products concurrently
     const fetchPromises = products.map(async (product) => {
+      if(product.image_url) {return};
       const photos = await fetchPhotosUnsplash(product.product_name);
       return photos;
     });
@@ -41,5 +42,7 @@ async function fetchPhotos(products) {
   
     return allPhotos;
 }
+
+
 
 export { fetchPhotos }

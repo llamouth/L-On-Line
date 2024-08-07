@@ -1,16 +1,12 @@
-$product-card-bg: #fff;
-$product-card-border: #dee2e6;
-$product-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
 .product-card {
-    border: 1px solid $product-card-border;
+    border: 1px solid #dee2e6;
     border-radius: 8px;
-    box-shadow: $product-card-shadow;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 10px;
     overflow: hidden;
 
     .card-img-top {
-        height: 200px; // Adjust as needed
+        height: 200px;
         object-fit: cover;
     }
 
@@ -26,8 +22,8 @@ $product-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .card-footer {
-        background-color: $product-card-bg;
-        border-top: 1px solid $product-card-border;
+        background-color: #fff;
+        border-top: 1px solid #dee2e6;
         text-align: center;
     }
 }

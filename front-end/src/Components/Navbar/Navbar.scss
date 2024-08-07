@@ -20,9 +20,11 @@ $border-color: #dee2e6;
         font-size: 1.5rem;
         font-weight: 700;
         text-decoration: none;
+        transition: background-color 2s ease-in-out;
 
         &:hover {
-            color: darken($secondary-color, 10%);
+            background-color: $primary-color;
+            color: $secondary-color;
         }
     }
 
@@ -36,9 +38,11 @@ $border-color: #dee2e6;
             font-size: 1rem;
             margin-left: 1rem;
             font-weight: 500;
+            transition: background-color 2s ease-in-out;
 
             &:hover {
-                color: darken($secondary-color, 10%);
+                background-color: $primary-color;
+                color: $secondary-color;
             }
         }
 
@@ -49,10 +53,11 @@ $border-color: #dee2e6;
             padding: 0.5rem 1rem;
             margin-left: 1rem;
             font-size: 1rem;
+            transition: background-color 2s ease-in-out;
 
             &:hover {
-                background-color: darken($secondary-color, 10%);
-                color: $primary-color;
+                background-color: $primary-color;
+                color: $secondary-color;
             }
         }
 
@@ -63,8 +68,8 @@ $border-color: #dee2e6;
             margin-left: 1rem;
 
             &:hover {
-                background-color: darken($secondary-color, 10%);
-                color: $primary-color;
+                background-color: $primary-color;
+                color: $secondary-color;
             }
         }
     }
