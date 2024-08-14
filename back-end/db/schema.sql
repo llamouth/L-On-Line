@@ -5,7 +5,7 @@ CREATE DATABASE lonline;
 CREATE TABLE distributors (
     distid SERIAL PRIMARY KEY,
     username TEXT NOT NULL,
-    password VARCHAR(20) NOT NULL
+    password_hash VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE consumers (
@@ -13,7 +13,8 @@ CREATE TABLE consumers (
     first_name VARCHAR(25) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     username TEXT NOT NULL,
-    password VARCHAR(20) NOT NULL,
+    email TEXT NOT NULL,
+    password_hash TEXT NOT NULL,
     address TEXT NOT NULL
 );
 

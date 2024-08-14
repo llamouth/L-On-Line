@@ -1,6 +1,6 @@
 \c lonline;
 
-INSERT INTO distributors (userName, password) VALUES
+INSERT INTO distributors (userName, password_hash) VALUES
 ('johndoe', 'password123'),
 ('janedoe', 'password123'),
 ('normanthomas', 'password123');
@@ -15,13 +15,13 @@ INSERT INTO products (distributor_id, product_name, product_price) VALUES
 (3, '3d-printer', 499.99),
 (3, '3d-pen', 44.99);
 
-INSERT INTO consumers (first_name, last_name, username, password, address) VALUES 
-( 'john', 'doe', 'johndoe', 'password123', '123 abc st'),
-( 'howie', 'duitt', 'howieduitt', 'password123', '456 def ave'),
-( 'albee', 'beck', 'albeebeck', 'password123', '789 ghi dr'),
-( 'lebron', 'james', 'lebronjames', 'password123', '123 abc st'),
-( 'aubrey', 'graham', 'ovodrake', 'password123', '123 abc st'),
-( 'rick', 'james', 'rickjames', 'password123', '456 xyz st');
+INSERT INTO consumers (first_name, last_name, username, password_hash, address, email) VALUES 
+( 'john', 'doe', 'johndoe', 'password123', '123 abc st', 'johndoe@example.com'),
+( 'howie', 'duitt', 'howieduitt', 'password123', '456 def ave', 'howieduitt@example.com'),
+( 'albee', 'beck', 'albeebeck', 'password123', '789 ghi dr', 'albeebeck@example.com'),
+( 'lebron', 'james', 'lebronjames', 'password123', '123 abc st', 'lebronjames@example.com'),
+( 'aubrey', 'graham', 'ovodrake', 'password123', '123 abc st', 'ovodrake@example.com'),
+( 'rick', 'james', 'rickjames', 'password123', '456 xyz st', 'rickjames@example.com');
 
 INSERT INTO cart_products (carts_owner, products_id, products_quantity, ordered) VALUES 
 (1, 1, 1, true), 

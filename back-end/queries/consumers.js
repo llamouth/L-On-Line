@@ -1,4 +1,5 @@
 const db = require("../db/dbConfig")
+const bcrypt = require("bcrypt")
 
 const getAllConsumers = async () => {
     try {
@@ -19,12 +20,13 @@ const getOneConsumer = async (id) => {
 }
 
 const createConsumer = async (consumer) => {
-    const { username, password, address, first_name, last_name } = consumer
     try {
-        const newConsumer = await db.one("INSERT INTO consumers (username, password, address, first_name, last_name) VALUES ($1, $2, $3, $4, $5) RETURNING *", [username, password, address, first_name, last_name])
+        const { username, email, password_hash, address, first_name, last_name  } = consumer
+        const salt = 10
+        const hash = await bcrypt.hash(password_hash, salt)
+        const newConsumer = await db.one("INSERT INTO consumers (username, email, password_hash, address, first_name, last_name) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *", [username, email, hash, address, first_name, last_name])
         return newConsumer
     } catch (error) {
-        console.log(error)
         return error
     }
 }
@@ -48,4 +50,21 @@ const deleteConsumer = async (id) => {
     }
 }
 
-module.exports = { getAllConsumers, getOneConsumer, createConsumer, updateConsumer, deleteConsumer }
+const loginConsumer = async (cons) => {
+    try {
+        const { username, password_hash } = cons
+        const loggedInConsumer = await db.oneOrNone("SELECT * FROM consumers WHERE username=$1", username)
+        if(!loggedInConsumer) { return false }
+        
+        const passwordMatch = await bcrypt.compare(password_hash, loggedInConsumer.password_hash)
+
+        if(!passwordMatch){ return false }
+        
+        return loggedInConsumer
+    } catch (error) {
+        return error
+    }
+    
+}
+
+module.exports = { getAllConsumers, getOneConsumer, createConsumer, updateConsumer, deleteConsumer, loginConsumer }
