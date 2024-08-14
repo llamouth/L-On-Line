@@ -12,8 +12,8 @@ const getAllOrders = async (id) => {
             JOIN products ON cart_products.products_id = products.id 
             JOIN distributors ON orders.distributors_id = distributors.distid WHERE distributors_id=$1`, id);
 
-        const allOrders = allOrdersData.reduce((acc, order) => {
-            const existingOrder = acc.find(o => o.order_id === order.order_id);
+        const allOrders = allOrdersData.reduce((arr, order) => {
+            const existingOrder = arr.find(o => o.distributors_id === order.distributors_id);
             const product = {
                 product_id: order.product_id,
                 product_name: order.product_name,
@@ -24,7 +24,7 @@ const getAllOrders = async (id) => {
             if (existingOrder) {
                 existingOrder.products.push(product);
             } else {
-                acc.push({
+                arr.push({
                     order_id: order.order_id,
                     distributors_id: order.distributors_id,
                     consumers_id: order.consumers_id,
@@ -32,7 +32,7 @@ const getAllOrders = async (id) => {
                 });
             }
 
-            return acc;
+            return arr;
         }, []);
 
         return allOrders;

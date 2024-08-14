@@ -2,6 +2,10 @@ const express = require("express")
 const distributor = express.Router()
 const { getAllDistributors, getOneDistributor, createDistributor, updateDistributor, deleteDistributor } = require("../queries/distributors")
 const { checkUser, checkId } = require("../validations/userValidations")
+const { authenticateToken } = require("../auth/auth")
+const ordersController = require("./ordersController")
+
+distributor.use("/:distid", authenticateToken, ordersController)
 
 distributor.get("/", async (req, res) => {
     const allDistributors = await getAllDistributors()
