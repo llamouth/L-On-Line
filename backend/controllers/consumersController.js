@@ -42,7 +42,7 @@ consumer.post("/login", async (req, res) => {
     const token = jwt.sign({ userId: loggedInUser.consid, username: loggedInUser.username }, secret);
 
     const userLoggedIn = {
-        user_id: loggedInUser.user_id, 
+        user_id: loggedInUser.consid, 
         username: loggedInUser.username, 
         email: loggedInUser.email
     }

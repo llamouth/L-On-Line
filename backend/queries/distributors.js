@@ -1,4 +1,5 @@
 const db = require("../db/dbConfig")
+const bcrypt = require("bcrypt")
 
 const getAllDistributors = async () => {
     try {
@@ -20,18 +21,22 @@ const getOneDistributor = async (id) => {
 
 const createDistributor = async (dist) => {
     try {
-        const newDist = await db.one("INSERT INTO distributors (userName, password) VALUES ($1, $2) RETURNING *;", [dist.username, dist.password])
+        const { username, password_hash } = dist
+        const salt = 10
+        const hash = await bcrypt.hash(password_hash, salt)
+        const newDist = await db.one("INSERT INTO distributors (username, password_hash) VALUES ($1, $2) RETURNING *;", [username, hash])
         return newDist
     } catch (error) {
-        console.log(error)
         return error
     }
 }
 
 const updateDistributor = async (id, dist) => {
-    const { username, password } = dist
+    const { username, password_hash } = dist
     try {
-        const updatedDistributor = await db.one("UPDATE distributors SET username=$1, password=$2 WHERE id=$3 RETURNING *", [username, password, id])
+        const salt = 10
+        const hash = await bcrypt.hash(password_hash, salt)
+        const updatedDistributor = await db.one("UPDATE distributors SET username=$1, password_hash=$2 WHERE id=$3 RETURNING *", [username, hash, id])
         return updatedDistributor
     } catch (error) {
         return error
@@ -48,4 +53,20 @@ const deleteDistributor = async (id) => {
     }
 }
 
-module.exports = { getAllDistributors, getOneDistributor, createDistributor, updateDistributor, deleteDistributor }
+const loginDistributor = async (dist) => {
+    try {
+        const { username, password_hash } = dist
+        const loggedInDist = await db.oneOrNone("SELECT * FROM distributors WHERE username=$1", username)
+        if(!loggedInDist) { return false }
+        
+        const passwordMatch = await bcrypt.compare(password_hash, loggedInDist.password_hash)
+
+        if(!passwordMatch){ return false }
+        
+        return loggedInDist
+    } catch (error) {
+        return error
+    }
+}
+
+module.exports = { getAllDistributors, getOneDistributor, createDistributor, updateDistributor, deleteDistributor, loginDistributor }

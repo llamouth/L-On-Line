@@ -43,7 +43,7 @@ const getAllOrders = async (id) => {
 
 const getSingleOrder = async (id) => {
     try {
-        const singleOrderData = await db.any(`
+        const singleOrderData = await db.oneOrNone(`
             SELECT orders.order_id, distributors.distid AS distributors_id, consumers.consid AS consumers_id, 
                    products.id AS product_id, products.product_name, products.product_price, 
                    cart_products.products_quantity, orders.cart_products_id
@@ -60,10 +60,10 @@ const getSingleOrder = async (id) => {
         }
 
         const orderDetails = {
-            order_id: singleOrderData[0].order_id,
-            distributors_id: singleOrderData[0].distributors_id,
-            consumers_id: singleOrderData[0].consumers_id,
-            products: singleOrderData.map(order => ({
+            order_id: singleOrderData.order_id,
+            distributors_id: singleOrderData.distributors_id,
+            consumers_id: singleOrderData.consumers_id,
+            products: singleOrderData.products.map(order => ({
                 product_id: order.product_id,
                 product_name: order.product_name,
                 product_price: order.product_price,
